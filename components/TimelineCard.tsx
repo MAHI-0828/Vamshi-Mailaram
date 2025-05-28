@@ -55,7 +55,7 @@ const TimelineCard: React.FC<TimelineCardProps> = React.memo(({ event, dotOffset
             <p className="text-xs text-[#4a4e69] mb-1 uppercase tracking-wider font-['Roboto Mono']">
               {date}
             </p>{' '}
-            {/* ultra-violet for date on light bg */}
+            {/* ultra-violet for date on llight bg */}
             <h3
               id={`event-title-${id}`}
               className="text-xl sm:text-2xl font-bold font-heading text-[#22223b] mb-1"
