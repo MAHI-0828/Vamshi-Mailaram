@@ -103,22 +103,20 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   const [isTimelineHovered, setIsTimelineHovered] = useState(false);
   const modalRoot = document.getElementById('modal-root');
 
-  // Hover handlers to show preview
   const onHoverStart = useCallback((index: number) => {
-    if (isDragging) return; // Don't show preview while dragging
+    if (isDragging) return;
     setHoveredIndex(index);
     setIsScrollLocked(true);
     if (autoScrollRef.current) clearInterval(autoScrollRef.current);
   }, [isDragging]);
 
   const onHoverEnd = useCallback((index: number) => {
-    setHoveredIndex(null);
+    setHoveredIndex(current => (current === index ? null : current));
     setIsScrollLocked(false);
     setIsDragging(false);
     if (!isTimelineHovered) resetAutoScroll();
   }, [isTimelineHovered]);
 
-  // Mouse drag handlers for sliding left/right
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     setIsDragging(true);
     setIsScrollLocked(true);
@@ -131,13 +129,12 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     e.preventDefault();
     const x = e.pageX - (containerRef.current?.offsetLeft || 0);
     const walk = (x - startXRef.current) / (containerRef.current?.offsetWidth || 1);
-    // Use walk * itemsToShow * 1 (multiplier tuned for smoothness)
     const deltaIndex = Math.round(walk * itemsToShow);
     let newIndex = scrollLeftRef.current - deltaIndex;
     newIndex = Math.max(0, Math.min(newIndex, media.length - itemsToShow));
     setCurrentIndex(newIndex);
 
-    // While dragging, hide preview
+    // Hide preview during drag
     if (hoveredIndex !== null) {
       setHoveredIndex(null);
     }
@@ -157,7 +154,6 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     }
   }, [isDragging]);
 
-  // Auto scroll logic
   const autoScroll = useCallback(() => {
     if (isScrollLocked || isDragging || isTimelineHovered) return;
 
@@ -175,7 +171,6 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     }
   }, [autoScroll, isScrollLocked, isDragging, isTimelineHovered]);
 
-  // Wheel scroll navigation
   const handleWheel = useCallback((e: WheelEvent) => {
     if (!isScrollLocked) return;
     e.preventDefault();
@@ -204,7 +199,6 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     };
   }, [handleWheel]);
 
-  // Responsive items to show on resize
   useEffect(() => {
     const updateItemsToShow = () => {
       if (window.innerWidth < 640) setItemsToShow(1);
@@ -225,7 +219,20 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     };
   }, [resetAutoScroll]);
 
-  // Render carousel items container
+  // ESC key closes preview
+  useEffect(() => {
+    function handleEsc(event: KeyboardEvent) {
+      if (event.key === 'Escape' && hoveredIndex !== null) {
+        setHoveredIndex(null);
+        setIsScrollLocked(false);
+        setIsDragging(false);
+        resetAutoScroll();
+      }
+    }
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [hoveredIndex, resetAutoScroll]);
+
   const renderCarouselContent = useCallback(() => (
     <div
       ref={containerRef}
@@ -273,7 +280,6 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     isDragging
   ]);
 
-  // Modal preview of hovered image, centered with white border/frame
   const modalContent = useMemo(() => {
     if (hoveredIndex === null || !modalRoot || timelineId === 'event-upgraded-iphone-reels') return null;
 
@@ -282,11 +288,10 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
 
     if (mediaItem.type === MediaType.BeforeAfter || mediaItem.type === MediaType.YouTubeVideo) return null;
 
-    // Calculate safe margins for modal
     const headerHeight = document.querySelector('header')?.offsetHeight || 0;
     const windowHeight = window.innerHeight;
     const windowWidth = window.innerWidth;
-    const safeMargin = 32; // 2rem margin
+    const safeMargin = 32;
 
     const maxHeight = windowHeight - (headerHeight + safeMargin * 2);
     const maxWidth = windowWidth - (safeMargin * 2);
@@ -294,18 +299,20 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
 
     return ReactDOM.createPortal(
       <div
-        className="fixed inset-0 z-[9999] bg-black/50 backdrop-blur-sm flex items-start justify-center p-8"
+        className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-start justify-center p-8"
         style={{ paddingTop: top }}
       >
         <div
-          className="relative bg-transparent rounded-lg overflow-hidden pointer-events-auto border-4 border-white"
+          className="relative bg-transparent rounded-lg overflow-hidden pointer-events-auto"
           style={{
-            maxHeight: maxHeight,
-            maxWidth: maxWidth,
+            maxHeight,
+            maxWidth,
+            border: '6px solid white',
             boxSizing: 'border-box',
+            backgroundColor: 'rgba(0,0,0,0.9)',
           }}
         >
-          <div className="w-full h-full flex items-center justify-center bg-black/90 p-4">
+          <div className="w-full h-full flex items-center justify-center p-4">
             <MediaRenderer
               mediaItem={mediaItem}
               className="max-w-full max-h-full object-contain rounded-md"
@@ -337,7 +344,7 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   );
 });
 
-// Debounce utility
+// Utility function for debouncing
 function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
