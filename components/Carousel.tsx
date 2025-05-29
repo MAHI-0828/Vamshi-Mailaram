@@ -32,17 +32,14 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(({
   const itemRef = useRef<HTMLDivElement>(null);
   const [cursorPointer, setCursorPointer] = useState(false);
 
-  // On mouse enter, start cursor delay timer and hover preview timer
   const handleMouseEnter = useCallback(() => {
     if (isReelsTimeline) return;
     isHoveredRef.current = true;
 
-    // Cursor delay (300ms) before pointer cursor
     cursorTimeoutRef.current = setTimeout(() => {
       setCursorPointer(true);
     }, 300);
 
-    // Hover idle 1 second to open preview if not dragging
     hoverTimeoutRef.current = setTimeout(() => {
       if (isHoveredRef.current) {
         onPreviewOpen(index);
@@ -50,9 +47,9 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(({
     }, 1000);
   }, [index, isReelsTimeline, onPreviewOpen]);
 
-  // On mouse leave, clear timers and close preview if open
   const handleMouseLeave = useCallback((e: React.MouseEvent) => {
     if (isReelsTimeline) return;
+
     const relatedTarget = e.relatedTarget as HTMLElement;
 
     if (itemRef.current && !itemRef.current.contains(relatedTarget)) {
@@ -70,7 +67,6 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(({
     }
   }, [index, isReelsTimeline, onPreviewClose]);
 
-  // On click, open preview immediately
   const handleClick = useCallback(() => {
     if (isReelsTimeline) return;
     onPreviewOpen(index);
@@ -96,7 +92,7 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(({
       role="group"
       aria-roledescription="slide"
       data-index={index}
-      tabIndex={0} // for keyboard accessibility
+      tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -128,7 +124,6 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   const [isTimelineHovered, setIsTimelineHovered] = useState(false);
   const modalRoot = document.getElementById('modal-root');
 
-  // Open preview - triggered by click or hover idle
   const onPreviewOpen = useCallback((index: number) => {
     if (isDragging) return;
     setHoveredIndex(index);
@@ -136,7 +131,6 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     if (autoScrollRef.current) clearInterval(autoScrollRef.current);
   }, [isDragging]);
 
-  // Close preview - triggered on mouse leave or ESC
   const onPreviewClose = useCallback((index: number) => {
     setHoveredIndex(current => (current === index ? null : current));
     setIsScrollLocked(false);
@@ -161,7 +155,6 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     newIndex = Math.max(0, Math.min(newIndex, media.length - itemsToShow));
     setCurrentIndex(newIndex);
 
-    // Hide preview during drag
     if (hoveredIndex !== null) {
       setHoveredIndex(null);
     }
@@ -246,7 +239,6 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     };
   }, [resetAutoScroll]);
 
-  // ESC key closes preview
   useEffect(() => {
     function handleEsc(event: KeyboardEvent) {
       if (event.key === 'Escape' && hoveredIndex !== null) {
