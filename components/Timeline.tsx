@@ -16,16 +16,16 @@ const Timeline: React.FC<TimelineProps> = ({ events }) => {
   return (
     <div className="relative py-8 sm:py-12">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent"></div>
-      <div
+    <div
         className="container relative mx-auto max-w-[1024px] px-4 sm:px-6 lg:px-8"
-        style={{ boxSizing: 'border-box' }}
-      >
-        <div className="relative">
-          {/* Vertical timeline line */}
-          <div
+      style={{ boxSizing: 'border-box' }}
+    >
+      <div className="relative">
+        {/* Vertical timeline line */}
+        <div
             className="absolute w-1 bg-gray-200 rounded-full top-0 bottom-0 left-[40px]"
-            aria-hidden="true"
-          ></div>
+          aria-hidden="true"
+        ></div>
 
           {/* All timeline cards */}
           <div>

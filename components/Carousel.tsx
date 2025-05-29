@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import ReactDOM from 'react-dom';
-import { MediaItem } from '../types';
+import { MediaItem, MediaType } from '../types';
 import MediaRenderer from './MediaRenderer';
 
 interface CarouselProps {
@@ -69,7 +69,7 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(({
       isHoveredRef.current = false;
     };
   }, []);
-
+  
   return (
     <div
       ref={itemRef}
@@ -106,7 +106,7 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   const modalRoot = document.getElementById('modal-root');
 
   const onHoverStart = useCallback((index: number) => {
-    setHoveredIndex(index);
+      setHoveredIndex(index);
     setIsScrollLocked(true);
     if (autoScrollRef.current) {
       clearInterval(autoScrollRef.current);
@@ -169,7 +169,7 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
       clearInterval(autoScrollRef.current);
     }
     if (!isScrollLocked && !isDragging && !isTimelineHovered) {
-      autoScrollRef.current = setInterval(autoScroll, 3000);
+    autoScrollRef.current = setInterval(autoScroll, 3000);
     }
   }, [autoScroll, isScrollLocked, isDragging, isTimelineHovered]);
 
@@ -206,7 +206,7 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   }, [handleWheel]);
 
   useEffect(() => {
-    resetAutoScroll();
+        resetAutoScroll();
     return () => {
       if (autoScrollRef.current) {
         clearInterval(autoScrollRef.current);
@@ -281,6 +281,10 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   const modalContent = useMemo(() => {
     if (!hoveredIndex || !modalRoot || timelineId === 'event-upgraded-iphone-reels') return null;
     
+    // Don't show preview for BeforeAfter or YouTube videos
+    if (media[hoveredIndex].type === MediaType.BeforeAfter || 
+        media[hoveredIndex].type === MediaType.YouTubeVideo) return null;
+    
     // Calculate safe margins for the modal
     const calculateModalDimensions = () => {
       const headerHeight = document.querySelector('header')?.offsetHeight || 0;
@@ -308,7 +312,7 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
         }}
       >
         <div
-          className="relative bg-transparent rounded-lg overflow-hidden group pointer-events-none"
+          className="relative bg-transparent rounded-lg overflow-hidden group pointer-events-none border-2 border-white/20"
           style={{
             maxHeight: modalDimensions.maxHeight,
             maxWidth: modalDimensions.maxWidth
@@ -321,7 +325,7 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
             />
           </div>
           {media[hoveredIndex].description && (
-            <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-black/50 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-black/50 backdrop-blur-sm opacity-100">
               <p className="text-sm font-['Roboto Mono']">{media[hoveredIndex].description}</p>
             </div>
           )}
@@ -329,7 +333,7 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
       </div>,
       modalRoot
     );
-  }, [hoveredIndex, media, modalRoot, timelineId, onHoverEnd]);
+  }, [hoveredIndex, modalRoot, timelineId, media]);
 
   return (
     <>
@@ -362,7 +366,7 @@ function debounce<T extends (...args: any[]) => any>(
       func(...args);
       timeout = null;
     }, wait);
-  };
+};
 }
 
 export default Carousel;
