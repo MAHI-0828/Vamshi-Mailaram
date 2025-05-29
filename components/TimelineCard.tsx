@@ -2,6 +2,7 @@ import React from 'react';
 import { TimelineEventData, MediaType } from '../types';
 import { PhotoIcon, YouTubeIcon, VideoCameraIcon } from './icons';
 import Carousel from './Carousel';
+import VideoCarousel from './VideoCarousel';
 
 interface TimelineCardProps {
   event: TimelineEventData;
@@ -27,6 +28,9 @@ const CategoryIconComponent: React.FC<{ category: string; type: MediaType }> = (
 const TimelineCard: React.FC<TimelineCardProps> = React.memo(({ event, dotOffsetFromCardEdgePx }) => {
   const { id, date, title, category, description, eventProfileImageUrl, media } = event;
   const primaryMediaType = media.length > 0 ? media[0].type : MediaType.Image;
+
+  // Check if all media items are YouTube videos
+  const isAllYouTubeVideos = media.length > 0 && media.every(item => item.type === MediaType.YouTubeVideo);
 
   return (
     <div id={id} className="relative group">
@@ -70,7 +74,11 @@ const TimelineCard: React.FC<TimelineCardProps> = React.memo(({ event, dotOffset
 
         {media && media.length > 0 && (
           <div className="mb-4 rounded-lg overflow-hidden border border-gray-100 shadow-md hover:shadow-lg transition-all duration-300">
-            <Carousel media={media} timelineId={id} />
+            {isAllYouTubeVideos ? (
+              <VideoCarousel media={media} />
+            ) : (
+              <Carousel media={media} timelineId={id} />
+            )}
           </div>
         )}
 

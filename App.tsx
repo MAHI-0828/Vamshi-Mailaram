@@ -318,6 +318,46 @@ const sampleTimelineData: TimelineEventData[] = [
     ],
   },
   {
+    id: 'event-youtube-showcase',
+    date: '2023-2024',
+    title: 'YouTube Content Creation',
+    category: 'Video Production',
+    description: 'A collection of my favorite YouTube content, showcasing various video production techniques and storytelling approaches.',
+    eventProfileImageUrl: 'https://picsum.photos/seed/me_youtube/100/100',
+    media: [
+      {
+        type: MediaType.YouTubeVideo,
+        src: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+        altText: 'Sample YouTube Video 1',
+        description: 'Creative storytelling through video.',
+      },
+      {
+        type: MediaType.YouTubeVideo,
+        src: 'https://www.youtube.com/embed/jNQXAC9IVRw',
+        altText: 'Sample YouTube Video 2',
+        description: 'First YouTube video ever uploaded.',
+      },
+      {
+        type: MediaType.YouTubeVideo,
+        src: 'https://www.youtube.com/embed/Y8Wp3dafaMQ',
+        altText: 'Sample YouTube Video 3',
+        description: 'Beautiful nature documentary.',
+      },
+      {
+        type: MediaType.YouTubeVideo,
+        src: 'https://www.youtube.com/embed/LXb3EKWsInQ',
+        altText: 'Sample YouTube Video 4',
+        description: 'Cinematic nature footage.',
+      },
+      {
+        type: MediaType.YouTubeVideo,
+        src: 'https://www.youtube.com/embed/K1QICrgxTjA',
+        altText: 'Sample YouTube Video 5',
+        description: 'Advanced editing techniques.',
+      }
+    ],
+  },
+  {
     id: 'event-travel-documentary',
     date: 'Ongoing',
     title: 'Major Travel Documentary: The Mountain Peaks',
