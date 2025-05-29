@@ -1,9 +1,3 @@
-import React from 'react';
-import { TimelineEventData, MediaType } from './types';
-import Header from './components/Header';
-import Timeline from './components/Timeline';
-import HeroSection from './components/HeroSection';
-
 const sampleTimelineData: TimelineEventData[] = [
   {
     id: 'event-vivo-start',
@@ -26,7 +20,36 @@ const sampleTimelineData: TimelineEventData[] = [
         altText: 'Early Vivo shot - Macro',
         description: 'Close-up of a flower, exploring macro.',
       },
-      // ... add the rest media items here as before
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/Y0GwDwgX/IMG-20190704-175804-Original.jpg',
+        altText: 'Early Vivo shot - Portrait',
+        description: 'An early attempt at a street portrait.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/5976pZ6L/IMG-20191128-010649-Original.jpg',
+        altText: 'Early Vivo shot - Portrait',
+        description: "A flower in bloom, capturing nature's beauty.",
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/d06q3yCr/IMG-20190524-123833-Original.jpg',
+        altText: 'Early Vivo shot - Portrait',
+        description: 'And my first visit to the beautiful Ellora Caves.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/T3qtNpPH/IMG-20190818-173615-01-Original.jpg',
+        altText: 'Early Vivo shot - Portrait',
+        description: 'On a Rainy day, back 2019',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/k5LRxymr/IMG-20181230-100435-Original.jpg',
+        altText: 'Early Vivo shot - Portrait',
+        description: 'Symmetry',
+      },
     ],
   },
   {
@@ -38,7 +61,48 @@ const sampleTimelineData: TimelineEventData[] = [
     photoGroupDescription: 'Portraits and street scenes with sharper focus and emotion.',
     eventProfileImageUrl: 'https://picsum.photos/seed/me_camera_iphoneA/100/100',
     media: [
-      // your media items here...
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/Jh16tSNY/IMG-8748-Original.jpg',
+        altText: 'Early video edit with iPhone',
+        description: 'Experimenting with video on the iPhone.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/Ls84kwyW/IMG-5598-Original.jpg',
+        altText: 'First camera photo',
+        description: 'One of my first shots with the new DSLR.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/6p1c5TQq/IMG-9696.avif',
+        altText: 'First camera photo',
+        description: 'One of my first shots with the new DSLR.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/02PTJmXW/IMG-6558.avif',
+        altText: 'Early video edit with iPhone',
+        description: 'Experimenting with video on the iPhone.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/XNch3qNw/IMG-2813-Original.jpg',
+        altText: 'iPhone A photography example',
+        description: 'Discovering the capabilities of iPhone photography.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/CxZD77FM/IMG-9008.avif',
+        altText: 'iPhone A photography example',
+        description: 'Discovering the capabilities of iPhone photography.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/1t0D6zyp/IMG-8919.avif',
+        altText: 'iPhone A photography example',
+        description: 'Discovering the capabilities of iPhone photography.',
+      },
     ],
   },
   {
@@ -50,7 +114,42 @@ const sampleTimelineData: TimelineEventData[] = [
     photoGroupDescription: 'Rich, detailed shots showing advanced photography skills.',
     eventProfileImageUrl: 'https://picsum.photos/seed/me_client/100/100',
     media: [
-      // your media items here...
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/SsssqsHV/BIRD-FINAL.jpg',
+        altText: 'Client Project Sample 1',
+        description: 'Shot from a local event coverage.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/R0mSh1ZV/IMG-2615.jpg',
+        altText: 'Client Project Sample 1',
+        description: 'Shot from a local event coverage.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/MZgvxQVX/IMG-5644.jpg',
+        altText: 'Client Project Sample 1',
+        description: 'Shot from a local event coverage.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/fTZbT84J/IMG-5606.jpg',
+        altText: 'New DSLR quality',
+        description: 'Testing the limits of the new DSLR.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/Z5Hb9BB8/IMG-20200110-142714-Original.jpg',
+        altText: 'New DSLR quality',
+        description: 'Testing the limits of the new DSLR.',
+      },
+      {
+        type: MediaType.Image,
+        src: 'https://i.postimg.cc/P5p0Gk6Z/IMG-5232-Original-Original.jpg',
+        altText: 'Client Project Sample 2',
+        description: 'Product photography for a small business.',
+      },
     ],
   },
   {
@@ -66,7 +165,54 @@ const sampleTimelineData: TimelineEventData[] = [
     ],
     eventProfileImageUrl: 'https://i.postimg.cc/zvndDjGJ/DSC-1129.jpg',
     media: [
-      // your media items here...
+      {
+        type: MediaType.BeforeAfter,
+        beforeSrc: 'https://i.postimg.cc/QC1HSC7x/IMG-2357.jpg',
+        afterSrc: 'https://i.postimg.cc/GmcHJcmd/IMG-2622.jpg',
+        altText: 'Nature Photography Edit',
+        description: 'Nature shot: Enhanced colors, contrast, and mood in Lightroom.',
+        src: '',
+      },
+      {
+        type: MediaType.BeforeAfter,
+        beforeSrc: 'https://i.postimg.cc/prfLz7Nm/IMG-2609.jpg',
+        afterSrc: 'https://i.postimg.cc/wB1x0388/IMG-2610.jpg',
+        altText: 'Product Photography Edit',
+        description: 'Product photo: Refined colors and product enhancement in Photoshop.',
+        src: '',
+      },
+      {
+        type: MediaType.BeforeAfter,
+        beforeSrc: 'https://i.postimg.cc/59B4PZG0/IMG-2471.jpg',
+        afterSrc: 'https://i.postimg.cc/4NwJGpXR/IMG-2329.jpg',
+        altText: 'Wildlife Photography Edit',
+        description: 'Wildlife capture: Enhanced details and dramatic mood.',
+        src: '',
+      },
+      {
+        type: MediaType.BeforeAfter,
+        beforeSrc: 'https://i.postimg.cc/BQzV2vg1/IMG-2458.jpg',
+        afterSrc: 'https://i.postimg.cc/3JkLrTTr/IMG-2577.jpg',
+        altText: 'Wildlife Photography Edit',
+        description: 'Wildlife scene: Improved contrast and color balance.',
+        src: '',
+      },
+      {
+        type: MediaType.BeforeAfter,
+        beforeSrc: 'https://i.postimg.cc/1zB0cCQY/IMG-2613.jpg',
+        afterSrc: 'https://i.postimg.cc/R0mSh1ZV/IMG-2615.jpg',
+        altText: 'Wildlife Photography Edit',
+        description: 'Bird photography: Enhanced details and natural colors.',
+        src: '',
+      },
+      {
+        type: MediaType.BeforeAfter,
+        beforeSrc: 'https://i.postimg.cc/85svdTwj/IMG-2628.jpg',
+        afterSrc: 'https://i.postimg.cc/GhDNRyGh/IMG-2614.jpg',
+        altText: 'Wildlife Photography Edit',
+        description: 'Wildlife portrait: Improved lighting and mood.',
+        src: '',
+      },
     ],
   },
   {
@@ -82,124 +228,36 @@ const sampleTimelineData: TimelineEventData[] = [
     ],
     eventProfileImageUrl: 'https://picsum.photos/seed/me_iphone_pro/100/100',
     media: [
-      // your media items here...
-    ],
-  },
-  {
-    id: 'event-wedding-highlights',
-    date: '2021 – 2022',
-    title: 'Capturing Forever: Wedding Photography Highlights',
-    category: 'Wedding Photography',
-    description: 'Freezing emotional moments on couples’ special days.',
-    photoGroupDescription: 'Smiles, tears, and celebrations full of love.',
-    eventProfileImageUrl: 'https://your-image-url.jpg',
-    media: [
-      // your media items here...
-    ],
-  },
-  {
-    id: 'event-astro-pictures',
-    date: '2020',
-    title: 'Beyond Earth: Astrophotography Pictures',
-    category: 'Astrophotography',
-    description: 'Exploring starry skies and sharing stories through video.',
-    photoGroupDescription: 'Stunning night skies and creative content creation.',
-    eventProfileImageUrl: 'https://your-astro-image-url.jpg',
-    media: [
-      // your media items here...
+      {
+        type: MediaType.InstagramReel,
+        src: 'https://player.vimeo.com/video/1088597919?h=7f0c8f7c7c',
+        altText: 'Recent Instagram Reel',
+        description: 'A quick edit for an Instagram Reel.',
+      },
+      {
+        type: MediaType.InstagramReel,
+        src: 'https://player.vimeo.com/video/1088598102?h=7f0c8f7c7c',
+        altText: 'Advanced iPhone photo - Night mode',
+        description: 'Exploring night mode on the new iPhone.',
+      },
+      {
+        type: MediaType.InstagramReel,
+        src: 'https://player.vimeo.com/video/1088598048?h=7f0c8f7c7c',
+        altText: 'Advanced iPhone photo - Night mode',
+        description: 'Exploring night mode on the new iPhone.',
+      },
+      {
+        type: MediaType.InstagramReel,
+        src: 'https://player.vimeo.com/video/1088598021?h=7f0c8f7c7c',
+        altText: 'Advanced iPhone photo - Night mode',
+        description: 'Exploring night mode on the new iPhone.',
+      },
+      {
+        type: MediaType.InstagramReel,
+        src: 'https://player.vimeo.com/video/1088598077?h=7f0c8f7c7c',
+        altText: 'Advanced iPhone photo - Cinematic',
+        description: 'Attempting a cinematic shot with iPhone.',
+      },
     ],
   },
 ];
-
-// Social links unchanged, assuming you want them as is
-const socialLinks = {
-  instagram: 'https://instagram.com/your.handle',
-  facebook: 'https://facebook.com/your.page',
-  twitter: 'https://twitter.com/your.handle',
-  linkedin: 'https://linkedin.com/in/your.profile',
-  behance: 'https://behance.net/your.portfolio'
-};
-
-const App: React.FC = () => {
-  return (
-    <div
-      className="min-h-screen flex flex-col bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#334155] text-gray-900"
-      style={{ fontFamily: "'Averia Serif Libre', cursive" }}
-    >
-      <Header />
-      <main className="flex-grow">
-        <HeroSection
-          name="Vamshi Mailaram"
-          professionalSummary="Passionate visual storyteller, capturing moments and crafting narratives through photography and videography."
-          profileImageUrl="https://i.postimg.cc/0yVkXJfV/Vamsiiiiii-dpp.jpg"
-          backgroundImageUrl="https://i.postimg.cc/1zGmKNb7/IMG-7447-2-Original-Original.jpg"
-          profileImageClass="object-contain w-40 h-40 rounded-full mx-auto mb-6 border-4 border-gray-300 shadow-xl shadow-gray-300/30"
-          backgroundImageClass="bg-cover bg-center"
-        />
-
-        {/* Pass the updated sampleTimelineData to Timeline */}
-        <Timeline events={sampleTimelineData} />
-
-        {/* Contact Section */}
-        <section className="py-16 px-4 sm:px-6 lg:px-8 bg-black/30 backdrop-blur-sm">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-8">Let's Work Together</h2>
-            <p className="text-gray-300 mb-8">
-              I'm available for freelance work, collaborations, and creative projects.
-              Feel free to reach out to discuss your vision.
-            </p>
-            <div className="space-y-4">
-              <p className="text-gray-300">
-                <span className="font-semibold">Email:</span>{' '}
-                <a href="mailto:mailaram.saivamshi8096@gmail.com" className="text-blue-400 hover:text-blue-300">
-                  mailaram.saivamshi8096@gmail.com
-                </a>
-              </p>
-              <p className="text-gray-300">
-                <span className="font-semibold">Phone:</span>{' '}
-                <a href="tel:+918309304072" className="text-blue-400 hover:text-blue-300">
-                  +91 8309304072
-                </a>
-              </p>
-              <p className="text-gray-300">
-                <span className="font-semibold">Location:</span>{' '}
-                Available for projects
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Social Media Links */}
-        <section className="py-12 px-4 sm:px-6 lg:px-8 bg-black/20 backdrop-blur-sm">
-          <div className="max-w-3xl mx-auto">
-            <div className="flex justify-center space-x-8">
-              {Object.entries(socialLinks).map(([platform, url]) => (
-                <a
-                  key={platform}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors duration-300"
-                >
-                  <span className="sr-only">{platform}</span>
-                  <i className={`fab fa-${platform} text-2xl`}></i>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer className="text-center py-8 text-gray-300 text-sm font-['Roboto Mono'] bg-transparent backdrop-blur-md shadow-none">
-        <p>&copy; {new Date().getFullYear()} Vamshi Mailaram. All rights reserved.</p>
-        <p className="mt-2">
-          <a href="/privacy-policy" className="hover:text-white">Privacy Policy</a>
-          {' • '}
-          <a href="/terms" className="hover:text-white">Terms of Service</a>
-        </p>
-      </footer>
-    </div>
-  );
-};
-
-export default App;
