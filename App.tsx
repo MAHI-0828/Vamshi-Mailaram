@@ -317,6 +317,7 @@ const sampleTimelineData: TimelineEventData[] = [
       },
     ],
   },
+  /* Temporarily hidden YouTube showcase
   {
     id: 'event-youtube-showcase',
     date: '2023-2024',
@@ -357,6 +358,7 @@ const sampleTimelineData: TimelineEventData[] = [
       }
     ],
   },
+  */
   {
     id: 'event-travel-documentary',
     date: 'Ongoing',
