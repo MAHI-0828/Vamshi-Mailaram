@@ -4,7 +4,6 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
-  RefObject,
 } from "react";
 import ReactDOM from "react-dom";
 import { MediaItem, MediaType } from "../types";
@@ -19,25 +18,16 @@ interface CarouselSlideItemProps {
   item: MediaItem;
   itemsToShow: number;
   index: number;
-  onPreviewOpen: (index: number) => void;
-  onPreviewClose: (index: number) => void;
+  onHoverStart: (index: number) => void;
+  onHoverEnd: (index: number) => void;
   timelineId?: string;
-  previewModalRef?: RefObject<HTMLDivElement>;
 }
 
 const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(
-  ({
-    item,
-    itemsToShow,
-    index,
-    onPreviewOpen,
-    onPreviewClose,
-    timelineId,
-    previewModalRef,
-  }) => {
+  ({ item, itemsToShow, index, onHoverStart, onHoverEnd, timelineId }) => {
     const isReelsTimeline = timelineId === "event-upgraded-iphone-reels";
     const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const closePreviewTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const cursorTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const isHoveredRef = useRef(false);
     const itemRef = useRef<HTMLDivElement>(null);
@@ -48,9 +38,9 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(
         clearTimeout(hoverTimeoutRef.current);
         hoverTimeoutRef.current = null;
       }
-      if (closePreviewTimeoutRef.current) {
-        clearTimeout(closePreviewTimeoutRef.current);
-        closePreviewTimeoutRef.current = null;
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+        closeTimeoutRef.current = null;
       }
       if (cursorTimeoutRef.current) {
         clearTimeout(cursorTimeoutRef.current);
@@ -58,14 +48,14 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(
       }
     };
 
-    const handlePointerEnter = useCallback(() => {
+    const handleMouseEnter = useCallback(() => {
       if (isReelsTimeline) return;
       isHoveredRef.current = true;
 
-      // Cancel close preview if scheduled
-      if (closePreviewTimeoutRef.current) {
-        clearTimeout(closePreviewTimeoutRef.current);
-        closePreviewTimeoutRef.current = null;
+      // Cancel any close timeout if hovering again
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+        closeTimeoutRef.current = null;
       }
 
       // Cursor pointer delay 300ms
@@ -73,56 +63,47 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(
         setCursorPointer(true);
       }, 300);
 
-      // Hover idle 1000ms open preview
+      // Hover idle 1500ms to trigger preview start
       hoverTimeoutRef.current = setTimeout(() => {
         if (isHoveredRef.current) {
-          onPreviewOpen(index);
+          onHoverStart(index);
         }
-      }, 1000);
-    }, [index, isReelsTimeline, onPreviewOpen]);
+      }, 1500);
+    }, [index, isReelsTimeline, onHoverStart]);
 
-    const handlePointerLeave = useCallback(
-      (e: React.PointerEvent) => {
+    const handleMouseLeave = useCallback(
+      (e: React.MouseEvent) => {
         if (isReelsTimeline) return;
-
         const relatedTarget = e.relatedTarget as HTMLElement | null;
 
-        // If pointer moves into preview modal, don't close preview
-        if (
-          previewModalRef?.current &&
-          relatedTarget &&
-          previewModalRef.current.contains(relatedTarget)
-        ) {
-          return;
-        }
-
-        isHoveredRef.current = false;
-
-        if (hoverTimeoutRef.current) {
-          clearTimeout(hoverTimeoutRef.current);
-          hoverTimeoutRef.current = null;
-        }
-        if (cursorTimeoutRef.current) {
-          clearTimeout(cursorTimeoutRef.current);
-          cursorTimeoutRef.current = null;
-        }
-        setCursorPointer(false);
-
-        // Delay close preview by 200ms to prevent flicker
-        closePreviewTimeoutRef.current = setTimeout(() => {
-          if (!isHoveredRef.current) {
-            onPreviewClose(index);
+        if (itemRef.current && !itemRef.current.contains(relatedTarget)) {
+          isHoveredRef.current = false;
+          if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+            hoverTimeoutRef.current = null;
           }
-        }, 200);
+          if (cursorTimeoutRef.current) {
+            clearTimeout(cursorTimeoutRef.current);
+            cursorTimeoutRef.current = null;
+          }
+          setCursorPointer(false);
+
+          // Delay closing preview by 200ms to prevent flicker
+          closeTimeoutRef.current = setTimeout(() => {
+            if (!isHoveredRef.current) {
+              onHoverEnd(index);
+            }
+          }, 200);
+        }
       },
-      [index, isReelsTimeline, onPreviewClose, previewModalRef]
+      [index, isReelsTimeline, onHoverEnd]
     );
 
     const handleClick = useCallback(() => {
       if (isReelsTimeline) return;
       clearAllTimeouts();
-      onPreviewOpen(index);
-    }, [index, isReelsTimeline, onPreviewOpen]);
+      onHoverStart(index);
+    }, [index, isReelsTimeline, onHoverStart]);
 
     useEffect(() => {
       return () => {
@@ -139,8 +120,8 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(
           !isReelsTimeline && cursorPointer ? "cursor-pointer" : ""
         }`}
         style={{ width: `calc(100% / ${itemsToShow})`, height: "100%" }}
-        onPointerEnter={handlePointerEnter}
-        onPointerLeave={handlePointerLeave}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={handleClick}
         role="group"
         aria-roledescription="slide"
@@ -150,7 +131,7 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             clearAllTimeouts();
-            onPreviewOpen(index);
+            onHoverStart(index);
           }
         }}
       >
@@ -177,11 +158,9 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTimelineHovered, setIsTimelineHovered] = useState(false);
+  const modalRoot = document.getElementById("modal-root");
 
-  // Ref for preview modal container
-  const modalContainerRef = useRef<HTMLDivElement>(null);
-
-  const onPreviewOpen = useCallback(
+  const onHoverStart = useCallback(
     (index: number) => {
       if (isDragging) return;
       setHoveredIndex(index);
@@ -191,7 +170,7 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     [isDragging]
   );
 
-  const onPreviewClose = useCallback(
+  const onHoverEnd = useCallback(
     (index: number) => {
       setHoveredIndex((current) => (current === index ? null : current));
       setIsScrollLocked(false);
@@ -222,6 +201,7 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
       newIndex = Math.max(0, Math.min(newIndex, media.length - itemsToShow));
       setCurrentIndex(newIndex);
 
+      // Hide preview on drag
       if (hoveredIndex !== null) {
         setHoveredIndex(null);
       }
@@ -324,8 +304,8 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     return () => window.removeEventListener("keydown", handleEsc);
   }, [hoveredIndex, resetAutoScroll]);
 
-  const renderCarouselContent = useCallback(
-    () => (
+  const renderCarouselContent = useCallback(() => {
+    return (
       <div
         ref={containerRef}
         className={`flex transition-transform duration-500 ease-in-out h-full ${
@@ -341,7 +321,9 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
         onMouseEnter={() => setIsTimelineHovered(true)}
         onMouseOut={() => {
           setIsTimelineHovered(false);
-          if (!isScrollLocked && !isDragging) resetAutoScroll();
+          if (!isScrollLocked && !isDragging) {
+            resetAutoScroll();
+          }
         }}
       >
         {media.map((item, index) => (
@@ -350,30 +332,28 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
             item={item}
             itemsToShow={itemsToShow}
             index={index}
-            onPreviewOpen={onPreviewOpen}
-            onPreviewClose={onPreviewClose}
+            onHoverStart={onHoverStart}
+            onHoverEnd={onHoverEnd}
             timelineId={timelineId}
-            previewModalRef={modalContainerRef}
           />
         ))}
       </div>
-    ),
-    [
-      currentIndex,
-      itemsToShow,
-      isScrollLocked,
-      media,
-      handleMouseDown,
-      handleMouseMove,
-      handleMouseUp,
-      handleMouseLeave,
-      onPreviewOpen,
-      onPreviewClose,
-      timelineId,
-      resetAutoScroll,
-      isDragging,
-    ]
-  );
+    );
+  }, [
+    currentIndex,
+    itemsToShow,
+    isScrollLocked,
+    media,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    handleMouseLeave,
+    onHoverStart,
+    onHoverEnd,
+    timelineId,
+    resetAutoScroll,
+    isDragging,
+  ]);
 
   const modalContent = useMemo(() => {
     if (
@@ -401,26 +381,8 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     const maxWidth = windowWidth - safeMargin * 2;
     const top = headerHeight + safeMargin;
 
-    // Close preview if pointer leaves modal and not moved into thumbnail
-    const handleModalPointerLeave = (e: React.PointerEvent) => {
-      const relatedTarget = e.relatedTarget as HTMLElement | null;
-
-      if (
-        relatedTarget &&
-        !modalContainerRef.current?.contains(relatedTarget)
-      ) {
-        // Pointer left modal, close preview
-        setHoveredIndex(null);
-        setIsScrollLocked(false);
-        setIsDragging(false);
-        resetAutoScroll();
-      }
-    };
-
     return ReactDOM.createPortal(
       <div
-        ref={modalContainerRef}
-        onPointerLeave={handleModalPointerLeave}
         className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-start justify-center p-8"
         style={{ paddingTop: top }}
       >
@@ -468,7 +430,6 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   );
 });
 
-// Debounce utility
 function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
