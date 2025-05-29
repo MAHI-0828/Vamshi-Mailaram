@@ -58,23 +58,19 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(
       }
     };
 
-    // On hover start: after 1.5s show preview
     const handlePointerEnter = useCallback(() => {
       if (isReelsTimeline) return;
       isHoveredRef.current = true;
 
-      // Cancel scheduled close (if any)
       if (closeTimeoutRef.current) {
         clearTimeout(closeTimeoutRef.current);
         closeTimeoutRef.current = null;
       }
 
-      // Cursor pointer delay 300ms
       cursorTimeoutRef.current = setTimeout(() => {
         setCursorPointer(true);
       }, 300);
 
-      // 1.5s hover delay to open preview
       hoverTimeoutRef.current = setTimeout(() => {
         if (isHoveredRef.current) {
           onPreviewOpen(index);
@@ -82,38 +78,33 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(
       }, 1500);
     }, [index, isReelsTimeline, onPreviewOpen]);
 
-    // On leaving thumbnail: only close preview if pointer is NOT moving into modal preview
     const handlePointerLeave = useCallback(
       (e: React.PointerEvent) => {
         if (isReelsTimeline) return;
-
         const relatedTarget = e.relatedTarget as HTMLElement | null;
 
-        // If pointer moves into modal preview, keep preview open
         if (
           previewModalRef?.current &&
           relatedTarget &&
           previewModalRef.current.contains(relatedTarget)
         ) {
+          // Pointer moved into modal - keep preview open
           return;
         }
 
         isHoveredRef.current = false;
 
-        // Clear hover open timer
         if (hoverTimeoutRef.current) {
           clearTimeout(hoverTimeoutRef.current);
           hoverTimeoutRef.current = null;
         }
 
-        // Clear cursor pointer timer and reset cursor
         if (cursorTimeoutRef.current) {
           clearTimeout(cursorTimeoutRef.current);
           cursorTimeoutRef.current = null;
         }
         setCursorPointer(false);
 
-        // Delay close preview by 200ms to avoid flicker
         closeTimeoutRef.current = setTimeout(() => {
           if (!isHoveredRef.current) {
             onPreviewClose(index);
@@ -123,7 +114,6 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(
       [index, isReelsTimeline, onPreviewClose, previewModalRef]
     );
 
-    // On click, open preview immediately
     const handleClick = useCallback(() => {
       if (isReelsTimeline) return;
       clearAllTimeouts();
@@ -183,8 +173,9 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTimelineHovered, setIsTimelineHovered] = useState(false);
+  const modalRoot = document.getElementById("modal-root");
 
-  // Ref for preview modal container
+  // Ref for preview modal container for pointer checks
   const modalContainerRef = useRef<HTMLDivElement>(null);
 
   const onPreviewOpen = useCallback(
@@ -213,6 +204,7 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
       setIsScrollLocked(true);
       startXRef.current = e.pageX - (containerRef.current?.offsetLeft || 0);
       scrollLeftRef.current = currentIndex;
+
       // Close preview on drag start
       if (hoveredIndex !== null) setHoveredIndex(null);
     },
@@ -354,9 +346,10 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
             item={item}
             itemsToShow={itemsToShow}
             index={index}
-            onHoverStart={onHoverStart}
-            onHoverEnd={onHoverEnd}
+            onPreviewOpen={onHoverStart}
+            onPreviewClose={onHoverEnd}
             timelineId={timelineId}
+            previewModalRef={modalContainerRef}
           />
         ))}
       </div>
@@ -403,8 +396,25 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     const maxWidth = windowWidth - safeMargin * 2;
     const top = headerHeight + safeMargin;
 
+    // Modal pointer leave handler to close preview when mouse leaves modal
+    const handleModalPointerLeave = (e: React.PointerEvent) => {
+      const relatedTarget = e.relatedTarget as HTMLElement | null;
+
+      if (
+        relatedTarget &&
+        !modalContainerRef.current?.contains(relatedTarget)
+      ) {
+        setHoveredIndex(null);
+        setIsScrollLocked(false);
+        setIsDragging(false);
+        resetAutoScroll();
+      }
+    };
+
     return ReactDOM.createPortal(
       <div
+        ref={modalContainerRef}
+        onPointerLeave={handleModalPointerLeave}
         className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-start justify-center p-8"
         style={{ paddingTop: top }}
       >
