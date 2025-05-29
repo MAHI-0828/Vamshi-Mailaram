@@ -7,30 +7,30 @@ import HeroSection from './components/HeroSection';
 const sampleTimelineData: TimelineEventData[] = [
   {
     id: 'event-vivo-start',
-    date: 'Circa 2018-2019',
+    date: '2018-2019 HYD | CHD ',
     title: 'My First Steps with a Vivo Phone',
     category: 'Mobile Photography',
     description:
-      'Exploring the world of photography using just my Vivo smartphone. Learning composition, lighting, and capturing everyday moments. This phase was all about experimentation and finding my eye.',
+      'Some moments frozen in time — the early days of discovery and raw, candid energy.',
     eventProfileImageUrl: 'https://i.postimg.cc/zvndDjGJ/DSC-1129.jpg',
     media: [
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/j2zmpzQB/IMG-20190604-182315-01-01-Original.jpg',
         altText: 'Early Vivo shot - Landscape',
-        description: 'A misty morning landscape captured with Vivo.',
+        description: 'Symmetry — balance in chaos and order.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/J0qK3KQ7/IMG-20200208-174105-Original-2.jpg',
         altText: 'Early Vivo shot - Macro',
-        description: 'Close-up of a flower, exploring macro.',
+        description: 'Nature’s quiet grace captured in bloom.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/Y0GwDwgX/IMG-20190704-175804-Original.jpg',
         altText: 'Early Vivo shot - Portrait',
-        description: 'An early attempt at a street portrait.',
+        description: 'Faces hold stories waiting to be told.',
       },
       {
         type: MediaType.Image,
@@ -54,36 +54,36 @@ const sampleTimelineData: TimelineEventData[] = [
         type: MediaType.Image,
         src: 'https://i.postimg.cc/k5LRxymr/IMG-20181230-100435-Original.jpg',
         altText: 'Early Vivo shot - Portrait',
-        description: 'Symmetry',
+        description: 'Light and shadow play their timeless game.',
       },
     ],
   },
   {
     id: 'event-camera-iphoneA',
     date: 'Circa 2020-2021',
-    title: 'Upgrading to Camera & First iPhone',
+    title: 'My first transistion: Vivo to Iphone',
     category: 'Photography & Videography',
     description:
-      'Took a leap by getting my first dedicated camera and an iPhone. This opened up new possibilities in terms of quality, control, and learning editing techniques for both photos and videos.',
+      'Sharper focus, deeper emotions, and new creative horizons.',
     eventProfileImageUrl: 'https://picsum.photos/seed/me_camera_iphoneA/100/100',
     media: [
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/Jh16tSNY/IMG-8748-Original.jpg',
         altText: 'Early video edit with iPhone',
-        description: 'Experimenting with video on the iPhone.',
+        description: 'God’s presence whispers through nature’s beauty — in stillness, motion, and every frame I hold.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/Ls84kwyW/IMG-5598-Original.jpg',
         altText: 'First camera photo',
-        description: 'One of my first shots with the new DSLR.',
+        description: 'Framing life like a movie scene.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/6p1c5TQq/IMG-9696.avif',
         altText: 'First camera photo',
-        description: 'One of my first shots with the new DSLR.',
+        description: 'Every shot a new vantage point.',
       },
       {
         type: MediaType.Image,
@@ -95,48 +95,48 @@ const sampleTimelineData: TimelineEventData[] = [
         type: MediaType.Image,
         src: 'https://i.postimg.cc/XNch3qNw/IMG-2813-Original.jpg',
         altText: 'iPhone A photography example',
-        description: 'Discovering the capabilities of iPhone photography.',
+        description: 'Through my lens, I witness the divine in the ordinary, a sacred story told without words."',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/CxZD77FM/IMG-9008.avif',
         altText: 'iPhone A photography example',
-        description: 'Discovering the capabilities of iPhone photography.',
+        description: 'The vastness of mountains tells endless stories.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/1t0D6zyp/IMG-8919.avif',
         altText: 'iPhone A photography example',
-        description: 'Discovering the capabilities of iPhone photography.',
+        description: 'Within temple walls, peace settles like a gentle prayer, echoing through eternity',
       },
     ],
   },
   {
     id: 'event-client-dslr',
     date: '2021-2022',
-    title: 'First Client Project & DSLR Upgrade',
+    title: 'DSLR Upgrade!',
     category: 'Professional Growth',
     description:
-      'Landed my first paid client project, which motivated an upgrade to a morre advanced DSLR. Started to take on small gigs and build a professional portfolio.',
+      'Rich, detailed shots showcase technical skill and emotional depth, marking the journey into professional work.',
     eventProfileImageUrl: 'https://picsum.photos/seed/me_client/100/100',
     media: [
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/SsssqsHV/BIRD-FINAL.jpg',
         altText: 'Client Project Sample 1',
-        description: 'Shot from a local event coverage.',
+        description: 'Precision and clarity in every detail.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/R0mSh1ZV/IMG-2615.jpg',
         altText: 'Client Project Sample 1',
-        description: 'Shot from a local event coverage.',
+        description: 'Dramatic moods that tell a wild story.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/MZgvxQVX/IMG-5644.jpg',
         altText: 'Client Project Sample 1',
-        description: 'Shot from a local event coverage.',
+        description: 'In the quiet strength of the peaks, we find the courage to rise above.',
       },
       {
         type: MediaType.Image,
@@ -148,13 +148,13 @@ const sampleTimelineData: TimelineEventData[] = [
         type: MediaType.Image,
         src: 'https://i.postimg.cc/Z5Hb9BB8/IMG-20200110-142714-Original.jpg',
         altText: 'New DSLR quality',
-        description: 'Testing the limits of the new DSLR.',
+        description: 'One of my best shots',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/P5p0Gk6Z/IMG-5232-Original-Original.jpg',
         altText: 'Client Project Sample 2',
-        description: 'Product photography for a small business.',
+        description: 'Captured in Cinematic style',
       },
     ],
   },
@@ -164,7 +164,7 @@ const sampleTimelineData: TimelineEventData[] = [
     title: 'Mastering Lightroom & Photoshop (Before & After)',
     category: 'Photo Editing',
     description:
-      'Deep dive into photo editing techniques. This period was about transforming good photos into great ones, focusing on color grading, retouching, and creative effects. Showcasing some before & after examples.',
+      'Side-by-side comparisons reveal creativity and skill in post-processing.',
     eventProfileImageUrl: 'https://i.postimg.cc/zvndDjGJ/DSC-1129.jpg',
     media: [
       {
@@ -220,10 +220,10 @@ const sampleTimelineData: TimelineEventData[] = [
   {
     id: 'event-upgraded-iphone-reels',
     date: 'Circa 2022 - Present',
-    title: 'Advanced iPhone & Instagram Reels',
+    title: 'Storytelling with Instagram Reels',
     category: 'Mobile Content Creation',
     description:
-      'Mastering content creation with an upgraded iPhone. Focused on producing high-quality Instagram Reels, travel vlogs, and leveraging advanced mobile editing apps.',
+      'Telling stories through dynamic short videos on social media.',
     eventProfileImageUrl: 'https://picsum.photos/seed/me_iphone_pro/100/100',
     media: [
       {
@@ -261,59 +261,59 @@ const sampleTimelineData: TimelineEventData[] = [
   {
     id: 'event-drone-videography',
     date: '2023',
-    title: 'Exploring Drone Videography',
+    title: 'Some of my wedding shots',
     category: 'Aerial Videography',
     description:
-      'Added a drone to my toolkit, opening up new perspectives for videography. Learning flight controls, aerial composition, and editing drone footage.',
+      'Capturing Forever — Love, Emotion, and Celebration',
     eventProfileImageUrl: 'https://picsum.photos/seed/me_drone/100/100',
     media: [
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/R0s5nkMZ/IMG-5761-Original.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'Grace and elegance captured in her every glance',
       },
       {
         type: MediaType.Image,
         src: 'https://res.cloudinary.com/dfxvu4nio/image/upload/v1748481572/IMG_2670_Original_wnfpqq.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'The bride glowing with anticipation and love.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/PrBgWbs1/IMG-2452.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'Emotions running deep — joy, love, and the promise of forever.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/3JkLrTTr/IMG-2577.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'Tender moments shared between the couple, pure and heartfelt.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/Vs3wgPXS/IMG-5785-Original-Original.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'Moments of stillness amidst the whirlwind of celebration.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/dVPfkqrB/IMG-2578.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'Poise and beauty intertwined in her quiet confidence.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/W17PsDCr/IMG-5764-Original-Original.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'Love’s gentle touch reflected in every glance and smile.',
       },
       {
         type: MediaType.Image,
         src: 'https://res.cloudinary.com/dfxvu4nio/image/upload/v1748481571/IMG_2669_Original_ulm8vv.jpg',
         altText: 'Top-down Drone Shot',
-        description: 'Experimenting with top-down perspectives.',
+        description: '',
       },
     ],
   },
@@ -362,7 +362,7 @@ const sampleTimelineData: TimelineEventData[] = [
   {
     id: 'event-travel-documentary',
     date: 'Ongoing',
-    title: 'Major Travel Documentary: The Mountain Peaks',
+    title: 'Sky Wonders',
     category: 'Documentary Filmmaking',
     description:
       'Currently working on a personal passion project - a travel documentary series focused on mountain landscapes and cultures. This involves extensive travel, filming, and storytelling.',
@@ -372,25 +372,25 @@ const sampleTimelineData: TimelineEventData[] = [
         type: MediaType.Image,
         src: 'https://i.postimg.cc/bwg4K7S9/IMG-5863-Original-Original.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'Stars scattered like diamonds across the velvet night',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/FKn8K0Zf/IMG-4843-Original.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'The stillness before the storm, filled with electric anticipation.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/5NqrChgW/IMG-4030.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'Calm skies punctuated by shimmering stars and whispered winds.',
       },
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/8CsXxjST/IMG-6900.jpg',
         altText: 'Aerial Landscape',
-        description: 'Capturing landscapes from a new angle.',
+        description: 'A night painted with light and shadow in perfect harmony.',
       },
     ],
   },
