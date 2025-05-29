@@ -288,7 +288,7 @@ const sampleTimelineData: TimelineEventData[] = [
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/3JkLrTTr/IMG-2577.jpg',
-        altText: 'Aerial Landscape',
+        altText: 'Joy',
         description: 'Tender moments shared between the couple, pure and heartfelt.',
       },
       {
@@ -363,7 +363,7 @@ const sampleTimelineData: TimelineEventData[] = [
     id: 'event-travel-documentary',
     date: 'Ongoing',
     title: 'Sky Wonders',
-    category: 'Documentary Filmmaking',
+    category: 'Skies',
     description:
       'Currently working on a personal passion project - a travel documentary series focused on mountain landscapes and cultures. This involves extensive travel, filming, and storytelling.',
     eventProfileImageUrl: 'https://picsum.photos/seed/me_travel_doc/100/100',
