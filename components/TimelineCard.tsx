@@ -35,16 +35,6 @@ const TimelineCard: React.FC<TimelineCardProps> = React.memo(({ event, dotOffset
   return (
     <div id={id} className="relative group">
       <div
-        className="absolute w-4 h-4 rounded-full bg-white border-2 border-gray-200 z-10 shadow-md"
-        style={{
-          left: `-${dotOffsetFromCardEdgePx}px`,
-          top: '0.5rem',
-          transform: 'translateX(-50%)',
-        }}
-        aria-hidden="true"
-      ></div>
-
-      <div
         className="bg-white shadow-[0_0_15px_rgba(255,255,255,0.1)] backdrop-blur-sm rounded-xl p-5 sm:p-6 transform transition-all duration-300 ease-in-out hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] hover:scale-[1.02] hover:bg-white"
         aria-labelledby={`event-title-${id}`}
       >
