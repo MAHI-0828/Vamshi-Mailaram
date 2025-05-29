@@ -1,3 +1,9 @@
+import React from 'react';
+import { TimelineEventData, MediaType } from './types';
+import Header from './components/Header';
+import Timeline from './components/Timeline';
+import HeroSection from './components/HeroSection';
+
 const sampleTimelineData: TimelineEventData[] = [
   {
     id: 'event-vivo-start',
@@ -29,7 +35,7 @@ const sampleTimelineData: TimelineEventData[] = [
       {
         type: MediaType.Image,
         src: 'https://i.postimg.cc/5976pZ6L/IMG-20191128-010649-Original.jpg',
-        altText: 'Early Vivo shot - Portrait',
+        altText: "Early Vivo shot - Portrait",
         description: "A flower in bloom, capturing nature's beauty.",
       },
       {
@@ -241,23 +247,4 @@ const sampleTimelineData: TimelineEventData[] = [
         description: 'Exploring night mode on the new iPhone.',
       },
       {
-        type: MediaType.InstagramReel,
-        src: 'https://player.vimeo.com/video/1088598048?h=7f0c8f7c7c',
-        altText: 'Advanced iPhone photo - Night mode',
-        description: 'Exploring night mode on the new iPhone.',
-      },
-      {
-        type: MediaType.InstagramReel,
-        src: 'https://player.vimeo.com/video/1088598021?h=7f0c8f7c7c',
-        altText: 'Advanced iPhone photo - Night mode',
-        description: 'Exploring night mode on the new iPhone.',
-      },
-      {
-        type: MediaType.InstagramReel,
-        src: 'https://player.vimeo.com/video/1088598077?h=7f0c8f7c7c',
-        altText: 'Advanced iPhone photo - Cinematic',
-        description: 'Attempting a cinematic shot with iPhone.',
-      },
-    ],
-  },
-];
+        type: MediaType.Insta
