@@ -12,7 +12,7 @@ const CategoryIconComponent: React.FC<{ category: string; type: MediaType }> = (
   category,
   type,
 }) => {
-  const baseClasses = 'w-5 h-5 mr-2 text-[#9a8c98]'; // rose-quartz accent for icons
+  const baseClasses = 'w-5 h-5 mr-2 text-[#4a5568]';
   if (type === MediaType.YouTubeVideo) return <YouTubeIcon className={baseClasses} />;
   if (type === MediaType.Image) return <PhotoIcon className={baseClasses} />;
   if (type === MediaType.GenericVideo || type === MediaType.InstagramReel)
@@ -31,7 +31,7 @@ const TimelineCard: React.FC<TimelineCardProps> = React.memo(({ event, dotOffset
   return (
     <div id={id} className="relative group">
       <div
-        className="absolute w-4 h-4 rounded-full bg-[#9a8c98] border-2 border-[#22223b] z-10" // rose-quartz dot, space-cadet border for cut-out effect on dark bg
+        className="absolute w-4 h-4 rounded-full bg-white border-2 border-gray-200 z-10 shadow-md"
         style={{
           left: `-${dotOffsetFromCardEdgePx}px`,
           top: '0.5rem',
@@ -41,31 +41,27 @@ const TimelineCard: React.FC<TimelineCardProps> = React.memo(({ event, dotOffset
       ></div>
 
       <div
-        className="bg-[#f0efeb] backdrop-blur-sm rounded-xl shadow-xl p-5 sm:p-6 transform transition-all duration-300 ease-in-out group-hover:shadow-[#9a8c98]/30 group-hover:scale-[1.02]" // light card background, rose-quartz glow on hover
+        className="bg-white shadow-[0_0_15px_rgba(255,255,255,0.1)] backdrop-blur-sm rounded-xl p-5 sm:p-6 transform transition-all duration-300 ease-in-out hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] hover:scale-[1.02] hover:bg-white"
         aria-labelledby={`event-title-${id}`}
       >
         <div className="flex items-start mb-4">
           <img
             src={eventProfileImageUrl}
             alt={`Profile image for ${title}`}
-            className="w-12 h-12 sm:w-16 sm:h-16 rounded-full mr-4 border-2 border-[#9a8c98] object-cover flex-shrink-0 group-hover:scale-110 transition-transform duration-200 ease-in-out" // rose-quartz border
+            className="w-12 h-12 sm:w-16 sm:h-16 rounded-full mr-4 border-2 border-gray-200 object-cover flex-shrink-0 group-hover:scale-110 transition-transform duration-200 ease-in-out shadow-md"
             loading="lazy"
           />
           <div className="flex-grow">
-            <p className="text-xs text-[#4a4e69] mb-1 uppercase tracking-wider font-['Roboto Mono']">
+            <p className="text-xs text-[#4a5568] mb-1 uppercase tracking-wider font-['Roboto Mono']">
               {date}
-            </p>{' '}
-            {/* ultra-violet for date on llight bg */}
+            </p>
             <h3
               id={`event-title-${id}`}
-              className="text-xl sm:text-2xl font-bold font-heading text-[#22223b] mb-1"
+              className="text-xl sm:text-2xl font-bold font-heading text-[#1a202c] mb-1"
             >
               {title}
-            </h3>{' '}
-            {/* space-cadet for title on light bg */}
-            <div className="flex items-center text-sm text-[#4a4e69] font-['Roboto Mono']">
-              {' '}
-              {/* ultra-violet for category text on light bg */}
+            </h3>
+            <div className="flex items-center text-sm text-[#4a5568] font-['Roboto Mono']">
               <CategoryIconComponent category={category} type={primaryMediaType} />
               <span>{category}</span>
             </div>
@@ -73,13 +69,12 @@ const TimelineCard: React.FC<TimelineCardProps> = React.memo(({ event, dotOffset
         </div>
 
         {media && media.length > 0 && (
-          <div className="mb-4 rounded-lg overflow-hidden border border-[#c9ada7]/50"> {/* Pale Dogwood border for carousel on light bg */}
+          <div className="mb-4 rounded-lg overflow-hidden border border-gray-100 shadow-md hover:shadow-lg transition-all duration-300">
             <Carousel media={media} timelineId={id} />
           </div>
         )}
 
-        <p className="text-sm text-[#22223b] font-['Roboto Mono'] leading-relaxed">{description}</p>{' '}
-        {/* space-cadet for description on light bg */}
+        <p className="text-sm text-[#4a5568] font-['Roboto Mono'] leading-relaxed">{description}</p>
       </div>
     </div>
   );
