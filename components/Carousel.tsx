@@ -12,8 +12,8 @@ interface CarouselSlideItemProps {
   item: MediaItem;
   itemsToShow: number;
   index: number;
-  onHoverStart: (index: number) => void;
-  onHoverEnd: (index: number) => void;
+  onPreviewOpen: (index: number) => void;
+  onPreviewClose: (index: number) => void;
   timelineId?: string;
 }
 
@@ -21,49 +21,66 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(({
   item,
   itemsToShow,
   index,
-  onHoverStart,
-  onHoverEnd,
+  onPreviewOpen,
+  onPreviewClose,
   timelineId
 }) => {
   const isReelsTimeline = timelineId === 'event-upgraded-iphone-reels';
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const cursorTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isHoveredRef = useRef(false);
   const itemRef = useRef<HTMLDivElement>(null);
+  const [cursorPointer, setCursorPointer] = useState(false);
 
+  // On mouse enter, start cursor delay timer and hover preview timer
   const handleMouseEnter = useCallback(() => {
     if (isReelsTimeline) return;
     isHoveredRef.current = true;
 
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
+    // Cursor delay (300ms) before pointer cursor
+    cursorTimeoutRef.current = setTimeout(() => {
+      setCursorPointer(true);
+    }, 300);
 
+    // Hover idle 1 second to open preview if not dragging
     hoverTimeoutRef.current = setTimeout(() => {
       if (isHoveredRef.current) {
-        onHoverStart(index);
+        onPreviewOpen(index);
       }
-    }, 1500);
-  }, [index, isReelsTimeline, onHoverStart]);
+    }, 1000);
+  }, [index, isReelsTimeline, onPreviewOpen]);
 
+  // On mouse leave, clear timers and close preview if open
   const handleMouseLeave = useCallback((e: React.MouseEvent) => {
     if (isReelsTimeline) return;
-
     const relatedTarget = e.relatedTarget as HTMLElement;
 
     if (itemRef.current && !itemRef.current.contains(relatedTarget)) {
       isHoveredRef.current = false;
       if (hoverTimeoutRef.current) {
         clearTimeout(hoverTimeoutRef.current);
+        hoverTimeoutRef.current = null;
       }
-      onHoverEnd(index);
+      if (cursorTimeoutRef.current) {
+        clearTimeout(cursorTimeoutRef.current);
+        cursorTimeoutRef.current = null;
+      }
+      setCursorPointer(false);
+      onPreviewClose(index);
     }
-  }, [index, isReelsTimeline, onHoverEnd]);
+  }, [index, isReelsTimeline, onPreviewClose]);
+
+  // On click, open preview immediately
+  const handleClick = useCallback(() => {
+    if (isReelsTimeline) return;
+    onPreviewOpen(index);
+  }, [index, isReelsTimeline, onPreviewOpen]);
 
   useEffect(() => {
     return () => {
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current);
-      }
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+      if (cursorTimeoutRef.current) clearTimeout(cursorTimeoutRef.current);
+      setCursorPointer(false);
       isHoveredRef.current = false;
     };
   }, []);
@@ -71,13 +88,21 @@ const CarouselSlideItem: React.FC<CarouselSlideItemProps> = React.memo(({
   return (
     <div
       ref={itemRef}
-      className={`relative flex-shrink-0 ${!isReelsTimeline ? 'cursor-pointer' : ''}`}
+      className={`relative flex-shrink-0 ${!isReelsTimeline && cursorPointer ? 'cursor-pointer' : ''}`}
       style={{ width: `calc(100% / ${itemsToShow})`, height: '100%' }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       role="group"
       aria-roledescription="slide"
       data-index={index}
+      tabIndex={0} // for keyboard accessibility
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onPreviewOpen(index);
+        }
+      }}
     >
       <div className="flex items-center justify-center p-0.5 sm:p-1 rounded-md transition-transform duration-300 ease-in-out hover:scale-105 h-full">
         <MediaRenderer
@@ -103,14 +128,16 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   const [isTimelineHovered, setIsTimelineHovered] = useState(false);
   const modalRoot = document.getElementById('modal-root');
 
-  const onHoverStart = useCallback((index: number) => {
+  // Open preview - triggered by click or hover idle
+  const onPreviewOpen = useCallback((index: number) => {
     if (isDragging) return;
     setHoveredIndex(index);
     setIsScrollLocked(true);
     if (autoScrollRef.current) clearInterval(autoScrollRef.current);
   }, [isDragging]);
 
-  const onHoverEnd = useCallback((index: number) => {
+  // Close preview - triggered on mouse leave or ESC
+  const onPreviewClose = useCallback((index: number) => {
     setHoveredIndex(current => (current === index ? null : current));
     setIsScrollLocked(false);
     setIsDragging(false);
@@ -258,8 +285,8 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
           item={item}
           itemsToShow={itemsToShow}
           index={index}
-          onHoverStart={onHoverStart}
-          onHoverEnd={onHoverEnd}
+          onPreviewOpen={onPreviewOpen}
+          onPreviewClose={onPreviewClose}
           timelineId={timelineId}
         />
       ))}
@@ -273,8 +300,8 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
     handleMouseMove,
     handleMouseUp,
     handleMouseLeave,
-    onHoverStart,
-    onHoverEnd,
+    onPreviewOpen,
+    onPreviewClose,
     timelineId,
     resetAutoScroll,
     isDragging
@@ -344,7 +371,6 @@ const Carousel: React.FC<CarouselProps> = React.memo(({ media, timelineId }) => 
   );
 });
 
-// Utility function for debouncing
 function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
