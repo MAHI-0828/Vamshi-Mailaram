@@ -117,7 +117,7 @@ const sampleTimelineData: TimelineEventData[] = [
     title: 'First Client Project & DSLR Upgrade',
     category: 'Professional Growth',
     description:
-      'Landed my first paid client project, which motivated an upgrade to a more advanced DSLR. Started to take on small gigs and build a professional portfolio.',
+      'Landed my first paid client project, which motivated an upgrade to a morre advanced DSLR. Started to take on small gigs and build a professional portfolio.',
     eventProfileImageUrl: 'https://picsum.photos/seed/me_client/100/100',
     media: [
       {
